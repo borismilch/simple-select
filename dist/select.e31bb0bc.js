@@ -178,6 +178,7 @@ var Select = /*#__PURE__*/function () {
       if (type === 'item') {
         var id = event.target.dataset.id;
         var text = event.target.textContent;
+        console.log(id);
         this.$el.querySelector('[data-type ="input"]').textContent = text;
         this.close();
       }

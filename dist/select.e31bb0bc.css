@@ -5,19 +5,24 @@
 }
 
 .wrap {
-  width: 300px;
   display: flex;
+  height: 400px;
+  align-items: center;
   justify-content: center;
   margin: 0 auto;
   position: relative;
 }
 
 .select {
+  width: 300px;
+  margin: 0 auto;
   font-size: 16px;
   z-index: 100;
   font-family: serif;
   position: relative;
-  flex: 1 1 100%;
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 auto;
   transition: all 0.3s ease;
 }
 .select.open .select__dropdown {

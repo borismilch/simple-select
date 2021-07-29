@@ -23,7 +23,7 @@ export class Select{
     #render(){
         console.log(this.options);
         const {placeholder, data} = this.options;
-        this.$el.classList.add('select')
+        this.$el.classList.add('select');
         this.$el.innerHTML = getTemplate(data, placeholder);
 
     }
@@ -40,8 +40,8 @@ export class Select{
         if(type === 'item'){
             const id = event.target.dataset.id;
             const text = event.target.textContent;
-        this.$el.querySelector('[data-type ="input"]').textContent = text;
-
+            console.log(id);
+            this.$el.querySelector('[data-type ="input"]').textContent = text;
             this.close();
         }
     }
