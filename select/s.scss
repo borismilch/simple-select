@@ -35,6 +35,9 @@
             max-height: 200px;
             overflow-y: scroll;
         }
+        .select__backdrop{
+            display: block;
+        }
     }
     &__dropdown {
         width: 100%;
@@ -57,7 +60,16 @@
       
       }
      
-    
+    &__backdrop{
+        position: fixed;
+        background: transparent;
+        z-index: -1;
+        display: none;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
     &__input {
        
         border: 2px solid rgba(37, 30, 30, 0.767);
@@ -109,6 +121,13 @@
         background-color: white;
         transition: all 0.2s ease;
         flex: 1 1 auto;
+        &.selected{
+            background-color: rgba(56, 56, 201, 0.904);
+            color: white;
+            &:hover{
+                background-color: blue;
+            }
+        }
         &:hover{
             background-color: #eee;
            }

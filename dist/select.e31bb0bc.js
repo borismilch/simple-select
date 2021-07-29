@@ -141,7 +141,7 @@ function getTemplate() {
     return "<div class=\"select__item\" data-type=\"item\" data-id =\"".concat(item.id, "\">").concat(item.value, "</div>");
   });
   var text = placeholder !== null && placeholder !== void 0 ? placeholder : 'select';
-  var template = "\n    <div class=\"select__input\" data-type=\"input\">".concat(text, "</div>\n    <div class=\"select__dropdown\">\n      ").concat(items.join(''), "\n    </div>");
+  var template = "\n    <div class =\"select__backdrop\" data-type=\"backdrop\"></div>\n    <div class=\"select__input\" data-type=\"input\">".concat(text, "</div>\n    <div class=\"select__dropdown\">\n      ").concat(items.join(''), "\n    </div>");
   return template;
 }
 
@@ -159,6 +159,7 @@ var Select = /*#__PURE__*/function () {
 
     this.options = options;
     this.$el = document.querySelector(selector);
+    this.selectedId = null;
 
     _classPrivateMethodGet(this, _render, _render2).call(this);
 
@@ -177,9 +178,12 @@ var Select = /*#__PURE__*/function () {
 
       if (type === 'item') {
         var id = event.target.dataset.id;
-        var text = event.target.textContent;
         console.log(id);
-        this.$el.querySelector('[data-type ="input"]').textContent = text;
+        this.select(id);
+        this.close();
+      }
+
+      if (type == 'backdrop') {
         this.close();
       }
     }
@@ -194,6 +198,25 @@ var Select = /*#__PURE__*/function () {
       this.$el.classList.contains('open');
     }
   }, {
+    key: "current",
+    get: function get() {
+      var _this = this;
+
+      return this.options.data.find(function (item) {
+        return item.id == _this.selectedId;
+      });
+    }
+  }, {
+    key: "select",
+    value: function select(id) {
+      this.selectedId = id;
+      this.$el.querySelectorAll('[data-id]').forEach(function (element) {
+        element.classList.remove('selected');
+      });
+      this.$el.querySelector("[data-id = \"".concat(this.selectedId, "\"]")).classList.add('selected');
+      this.$value.textContent = this.current.value;
+    }
+  }, {
     key: "toggle",
     value: function toggle() {
       this.isOpen ? this.close() : this.open();
@@ -206,7 +229,8 @@ var Select = /*#__PURE__*/function () {
   }, {
     key: "destroy",
     value: function destroy() {
-      this.$el.removeEventListenr('click', this.clickHandler);
+      this.$el.removeEventListener('click', this.clickHandler);
+      this.$el.innerHTML = '';
     }
   }]);
 
@@ -219,14 +243,20 @@ function _render2() {
   console.log(this.options);
   var _this$options = this.options,
       placeholder = _this$options.placeholder,
-      data = _this$options.data;
+      data = _this$options.data,
+      dropup = _this$options.dropup;
   this.$el.classList.add('select');
   this.$el.innerHTML = getTemplate(data, placeholder);
+
+  if (dropup) {
+    this.$el.style.flexDirection = 'column-reverse';
+  }
 }
 
 function _setup2() {
   this.clickHandler = this.clickHandler.bind(this);
   this.$el.addEventListener('click', this.clickHandler);
+  this.$value = this.$el.querySelector('[data-type = "input"]');
 }
 
 ;
@@ -310,7 +340,7 @@ var _select = require("./select/select.js");
 require("./select/s.scss");
 
 var select = new _select.Select('#select', {
-  //placeholder : 'выбери пожалуйста текст',
+  placeholder: 'выбери пожалуйста текст',
   data: [{
     id: 1,
     value: 'Holubci'
@@ -335,7 +365,8 @@ var select = new _select.Select('#select', {
   }, {
     id: 8,
     value: 'Kotleti'
-  }]
+  }],
+  dropup: true
 });
 window.s = select;
 },{"./select/select.js":"select/select.js","./select/s.scss":"select/s.scss"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {

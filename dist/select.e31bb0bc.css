@@ -29,6 +29,9 @@
   max-height: 200px;
   overflow-y: scroll;
 }
+.select.open .select__backdrop {
+  display: block;
+}
 .select__dropdown {
   width: 100%;
   display: flex;
@@ -47,6 +50,16 @@
 }
 .select__dropdown::-webkit-scrollbar-corner {
   background-color: rgba(37, 30, 30, 0.767);
+}
+.select__backdrop {
+  position: fixed;
+  background: transparent;
+  z-index: -1;
+  display: none;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 .select__input {
   border: 2px solid rgba(37, 30, 30, 0.767);
@@ -94,6 +107,13 @@
   background-color: white;
   transition: all 0.2s ease;
   flex: 1 1 auto;
+}
+.select__item.selected {
+  background-color: rgba(56, 56, 201, 0.904);
+  color: white;
+}
+.select__item.selected:hover {
+  background-color: blue;
 }
 .select__item:hover {
   background-color: #eee;
