@@ -133,9 +133,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
 
-function getTemplate(options) {
-  var id = 0;
-  var template = "\n    <div class=\"select__input\">Select food</div>\n    <div class=\"select__dropdown\">\n       <div class=\"select__item\">food salo1</div>\n       <div class=\"select__item\">food salo2</div>\n       <div class=\"select__item\">food salo3</div>\n       <div class=\"select__item\">food salo4</div>\n       <div class=\"select__item\">food salo5</div>\n       <div class=\"select__item\">food salo6</div>\n    </div>";
+function getTemplate() {
+  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var placeholder = arguments.length > 1 ? arguments[1] : undefined;
+  console.log(data);
+  var items = data.map(function (item) {
+    return "<div class=\"select__item\" data-type=\"item\" data-id =\"".concat(item.id, "\">").concat(item.value, "</div>");
+  });
+  var text = placeholder !== null && placeholder !== void 0 ? placeholder : 'select';
+  var template = "\n    <div class=\"select__input\" data-type=\"input\">".concat(text, "</div>\n    <div class=\"select__dropdown\">\n      ").concat(items.join(''), "\n    </div>");
   return template;
 }
 
@@ -151,6 +157,7 @@ var Select = /*#__PURE__*/function () {
 
     _render.add(this);
 
+    this.options = options;
     this.$el = document.querySelector(selector);
 
     _classPrivateMethodGet(this, _render, _render2).call(this);
@@ -160,11 +167,35 @@ var Select = /*#__PURE__*/function () {
 
   _createClass(Select, [{
     key: "clickHandler",
-    value: function clickHandler(event) {}
+    value: function clickHandler(event) {
+      var type = event.target.dataset.type;
+      console.log(type);
+
+      if (type == 'input') {
+        this.toggle();
+      }
+
+      if (type === 'item') {
+        var id = event.target.dataset.id;
+        var text = event.target.textContent;
+        this.$el.querySelector('[data-type ="input"]').textContent = text;
+        this.close();
+      }
+    }
   }, {
     key: "open",
     value: function open() {
       this.$el.classList.toggle('open');
+    }
+  }, {
+    key: "isOpen",
+    get: function get() {
+      this.$el.classList.contains('open');
+    }
+  }, {
+    key: "toggle",
+    value: function toggle() {
+      this.isOpen ? this.close() : this.open();
     }
   }, {
     key: "close",
@@ -184,8 +215,12 @@ var Select = /*#__PURE__*/function () {
 exports.Select = Select;
 
 function _render2() {
+  console.log(this.options);
+  var _this$options = this.options,
+      placeholder = _this$options.placeholder,
+      data = _this$options.data;
   this.$el.classList.add('select');
-  this.$el.innerHTML = getTemplate();
+  this.$el.innerHTML = getTemplate(data, placeholder);
 }
 
 function _setup2() {
@@ -273,7 +308,34 @@ var _select = require("./select/select.js");
 
 require("./select/s.scss");
 
-var select = new _select.Select('#select', {});
+var select = new _select.Select('#select', {
+  //placeholder : 'выбери пожалуйста текст',
+  data: [{
+    id: 1,
+    value: 'Holubci'
+  }, {
+    id: 2,
+    value: 'Salo'
+  }, {
+    id: 3,
+    value: 'Borshch'
+  }, {
+    id: 4,
+    value: 'Kotleti'
+  }, {
+    id: 5,
+    value: 'Holubci'
+  }, {
+    id: 6,
+    value: 'Salo'
+  }, {
+    id: 7,
+    value: 'Borshch'
+  }, {
+    id: 8,
+    value: 'Kotleti'
+  }]
+});
 window.s = select;
 },{"./select/select.js":"select/select.js","./select/s.scss":"select/s.scss"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

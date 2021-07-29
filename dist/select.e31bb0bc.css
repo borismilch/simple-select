@@ -73,17 +73,15 @@
 }
 @media (any-hover: hover) {
   .select__input:hover {
-    background-color: wheat;
-    color: white;
+    background-color: #eee;
   }
   .select__input:hover::after {
-    border-color: white;
     transform: rotate(135deg);
     top: 37%;
   }
 }
 .select__item {
-  border: 2px solid rgba(37, 30, 30, 0.767);
+  border: 2px solid rgba(37, 30, 30, 0.367);
   display: flex;
   padding: 8px 10px;
   border-radius: 5px;
@@ -93,8 +91,7 @@
   flex: 1 1 auto;
 }
 .select__item:hover {
-  background-color: wheat;
-  color: white;
+  background-color: #eee;
 }
 
 /*# sourceMappingURL=/select.e31bb0bc.css.map */
